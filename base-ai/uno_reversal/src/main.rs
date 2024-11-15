@@ -27,14 +27,16 @@ fn understand_response() -> bool {
     split
 }
 
-fn turn(split:bool) -> &str{
+fn turn(split:bool){
     let mut next_move: &str;
     if split {
         next_move = "1";
     } else {
         next_move = "0";
     }
-    next_move
+
+    println!("{next_move}");
+
     game_loop();
 }
 
