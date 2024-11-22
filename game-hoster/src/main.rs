@@ -1,35 +1,25 @@
-
-// for other terimal apps to interact with this code, as well as commands for browsing filesystem.
-use std::io::{BufReader, BufWriter, BufRead, Write};
-use std::process::{Command, Stdio};
-
-// for filesystem logic
-use std::fs;
+use std::process::Command; // terimal commands
+use std::env;
 
 // required kernal of type unix | windows is not supported, change commands to fix.
-// required tools to compile code, rustc, g++, and rustpython
-fn gather_bots() -> std::io::Result<()> {
+fn sh_command1(command:&str) {
+    let output = Command::new("sh")
+    .arg("-c")
+    .arg(command)
+    .output()
+    .expect("Failed to execute command");
 
-    /* 
-    Command::new("ls")
-    .current_dir("/bin")
-    .spawn()
-    .expect("ls command failed to start");
-    */
-    let base_ai_path = "/Users/hadrian/Developer/Github Repos/Split-Steal-Competition/base-ai";
-    for entry in fs::read_dir(base_ai_path)? {
-        let entry = entry?;
-        println!("{:?}", entry);
-        for child in fs::read_dir(entry.path())? {
-            let child = child?;
-            println!("{:?}", child);
-        }
-    }
-    Ok(())
+    println!("{}", String::from_utf8_lossy(&output.stdout));
 }
 
-// 0 = split, 1 = steal
 fn main() {
-    println!("setting up games");
-    gather_bots();
+    let args: Vec<String> = env::args().collect();
+
+    if args.len() < 2 { // no parameter
+        sh_command1("sh compile.sh");
+        return;
+    }
+
+    let param = &args[1];
+    println!("Parameter: {}", param);
 }
