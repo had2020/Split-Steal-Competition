@@ -21,8 +21,9 @@ for ai in "${projects[@]}"; do
         # proceed with compiling and marking exec as a contestent in a folder
         folder_to_copy=($(pwd))
         cd ..
-        cd contestants
-        cp -r "$folder_to_copy" .
+        echo ls #TODO fix
+        #cd contestants
+        #cp -r "$folder_to_copy" .
       fi
       break
     fi
