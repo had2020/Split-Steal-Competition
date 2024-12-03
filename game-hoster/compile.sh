@@ -3,6 +3,8 @@ cd base-ai
 projects=($(ls))
 ai_dir=($(pwd))
 
+mkdir contestants
+
 # Comment
 for ai in "${projects[@]}"; do 
   #echo "$ai" #prints name
@@ -21,8 +23,10 @@ for ai in "${projects[@]}"; do
         # proceed with compiling and marking exec as a contestent in a folder
         folder_to_copy=($(pwd))
         cd ..
-        echo ls #TODO fix
-        #cd contestants
+        #echo "($(ls))"
+        cd ..
+        cd contestants
+        echo "($(ls))"
         #cp -r "$folder_to_copy" .
       fi
       break
@@ -35,3 +39,7 @@ for ai in "${projects[@]}"; do
 
   cd "$ai_dir"  
 done
+
+
+echo "game complete"
+rm -rf contestants
