@@ -22,6 +22,7 @@ for ai in "${projects[@]}"; do
   rust_cargo=false
   python_project=false
   cplusplus=false
+  counter=1
 
   for file in "${project_files[@]}"; do
     #echo "$file"
@@ -36,6 +37,7 @@ for ai in "${projects[@]}"; do
         cd ..
         cd contestants
         cp -r "$folder_to_copy" .
+        ((counter++))
       fi
       break
     elif [[ "${file}"  == *.py ]]; then
@@ -46,6 +48,7 @@ for ai in "${projects[@]}"; do
         cd ..
         cd contestants
         cp -r "$folder_to_copy" .
+        ((counter++))
     elif [[ "${file}"  == *.cpp ]]; then
         cplusplus=true
         folder_to_copy=($(pwd))
@@ -54,9 +57,10 @@ for ai in "${projects[@]}"; do
         cd ..
         cd contestants
         cp -r "$folder_to_copy" .
+        ((counter++))
     fi
   done
-
+  echo "count: $counter"
 
   #if [ $rust_cargo == true ]; then  #does work, for later use
     #echo "TODO something to rust cargo projects ie export them"
@@ -72,4 +76,7 @@ done
 #echo "game complete"
 #echo "($(ls))"
 cd ..
+
+#TODO something with files/folders in contestants
+
 rm -rf contestants
