@@ -73,7 +73,7 @@ done
 cd ..
 
 #TODO something with files/folders in contestants
-echo "Finished compiling bots"
+echo "Finished gathering bots [🤖][✅]"
 cd game-hoster
 sh compile.sh
 #rm -rf contestants
