@@ -30,7 +30,7 @@ done
 
 cd ..
 rm -rf contestants
-rm -rf builds #for main.rs to handle
+#rm -rf builds #for main.rs to handle
 
 cd game-hoster
-cargo run
+cargo run fromsh
