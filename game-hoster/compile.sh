@@ -3,8 +3,14 @@ cd ..
 
 cd contestants
 
+projects=($(ls))
+
+for ai in "${projects[@]}"; do 
+  cd "$ai"
+  project_files=($(ls))
+
   for file in "${project_files[@]}"; do
-    #echo "$file"
+    echo "$file"
     if [[ "${file}" == "Cargo.toml" ]]; then  
         echo "rust"
     elif [[ "${file}"  == *.py ]]; then
@@ -13,6 +19,4 @@ cd contestants
         echo "cpp"
     fi
   done
-
-cd ..
-rm -rf contestants
+done
