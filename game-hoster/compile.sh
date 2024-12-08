@@ -15,7 +15,7 @@ for ai in "${projects[@]}"; do
         echo "rust"
         export CARGO_TARGET_DIR=../../builds
         #cargo build
-        cargo build --release
+        cargo build --release --quiet
         cd ..
     elif [[ "${file}"  == *.py ]]; then
         echo "python" # Nothing else since we will just run python with python
@@ -33,4 +33,4 @@ rm -rf contestants
 #rm -rf builds #for main.rs to handle
 
 cd game-hoster
-cargo run fromsh
+cargo run fromsh --quiet

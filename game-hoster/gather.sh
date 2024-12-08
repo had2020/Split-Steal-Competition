@@ -8,11 +8,18 @@ cd ..
 mkdir contestants
 cd base-ai
 projects=($(ls))
-ai_dir=($(pwd))
+ai_dir=$(pwd)
+
+# basic dev log
+cd ..
+echo "$ai_dir < -- AI dir" >> logs.txt # > overwrite, >> append
+cd base-ai
+
 echo "searhing for bots in ai_dir..."
 
 # Comment
 for ai in "${projects[@]}"; do 
+  #echo "($(ls))"
   #echo "$ai" #prints name
   #echo "$ai: $(file --brief "$ai")"
   #ls
