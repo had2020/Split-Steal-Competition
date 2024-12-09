@@ -10,7 +10,6 @@
 /game-hoster/target
 /contestants
 /game-hoster/target
-/bin/
-/game-hoster/target
-/game-hoster/target
-/game-hoster/target
+/target/
+**/target/
+target/
