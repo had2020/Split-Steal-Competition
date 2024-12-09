@@ -16,12 +16,16 @@ fn sh_command1(command:&str) {
     println!("{}", String::from_utf8_lossy(&output.stdout));
 }
 
-fn count_bots() -> Result<(), Box<dyn std::error::Error>> {
-    let path = "/builds";
-    //let entries = read_dir("/builds");
+fn count_bots() -> std::io::Result<()> {
+    let path = "../builds";
+
+    if !std::path::Path::new(path).exists() {
+        println!("Path '{}' does not exist!", path);
+        return Ok(()); //exit gracefully
+    }
+
     let entries = fs::read_dir(path)?;
-    //https://doc.rust-lang.org/std/fs/struct.DirEntry.html
-    println!("Entrys under /builds 👇");
+    println!("Entries under ../builds 👇");
     for entry in entries {
         let entry1 = entry?;
         println!("{}", entry1.path().display());

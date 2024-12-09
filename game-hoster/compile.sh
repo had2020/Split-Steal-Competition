@@ -19,10 +19,12 @@ for ai in "${projects[@]}"; do
         cd ..
     elif [[ "${file}"  == *.py ]]; then
         echo "python" # Nothing else since we will just run python with python
+        mv "${file}" ../builds
         cd ..
     elif [[ "${file}"  == *.cpp ]]; then
         echo "cpp"
         g++ -o ${file} ${file}.cpp 
+        mv
         cd ..
     fi
   done
