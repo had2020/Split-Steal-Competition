@@ -12,7 +12,7 @@ ai_dir=$(pwd)
 
 # basic dev log
 cd ..
-echo "$ai_dir < -- AI dir" >> logs.txt # > overwrite, >> append
+#echo "$ai_dir < -- AI dir" >> logs.txt # > overwrite, >> append
 cd base-ai
 
 echo "searhing for bots in ai_dir..."

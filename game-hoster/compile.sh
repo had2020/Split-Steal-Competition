@@ -20,18 +20,21 @@ for ai in "${projects[@]}"; do
     elif [[ "${file}"  == *.py ]]; then
         echo "python" # Nothing else since we will just run python with python
         mv "${file}" ../builds
+        echo "($(ls))"
         cd ..
     elif [[ "${file}"  == *.cpp ]]; then
         echo "cpp"
         g++ -o ${file} ${file}.cpp 
-        mv
+        mv "${file}" ../builds
         cd ..
     fi
   done
 done
 
 cd ..
-rm -rf contestants
+#rm -rf contestants
+# TODO /\ old code, make only exec and python files go into builds
+
 #rm -rf builds #for main.rs to handle
 
 cd game-hoster
