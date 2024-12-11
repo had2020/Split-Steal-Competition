@@ -1,7 +1,11 @@
 echo "compiling bots..."
+echo "" > ../build_log.txt # > overwrite, >> append
 cd ..
 
 mkdir builds
+cd builds
+builds_folder=($(pwd))
+cd ..
 
 cd contestants
 projects=($(ls))
@@ -12,18 +16,22 @@ for ai in "${projects[@]}"; do
   for file in "${project_files[@]}"; do
     #echo "$file"
     if [[ "${file}" == "Cargo.toml" ]]; then  
-        echo "rust"
-        export CARGO_TARGET_DIR=../../builds
-        #cargo build
+        echo " Rust " >> build_log.txt
+        #export CARGO_TARGET_DIR=../../builds
+        #export CARGO_TARGET_DIR=../
+        #cargo build --release --quiet
         cargo build --release --quiet
+        mv -v "${file}" ${builds_folder}
+        #cargo build --artifact-dir=/ --target-dir=../../builds --release --no-default-features --features=bin
         cd ..
     elif [[ "${file}"  == *.py ]]; then
-        echo "python" # Nothing else since we will just run python with python
-        mv "${file}" ../builds
-        echo "($(ls))"
+        echo " Python " >> build_log.txt
+        #mv "${file}" lol.py
+        #echo "($(ls))"
+        mv -v "${file}" ${builds_folder}
         cd ..
     elif [[ "${file}"  == *.cpp ]]; then
-        echo "cpp"
+        echo " C++ " >> build_log.txt 
         g++ -o ${file} ${file}.cpp 
         mv "${file}" ../builds
         cd ..
@@ -32,7 +40,7 @@ for ai in "${projects[@]}"; do
 done
 
 cd ..
-#rm -rf contestants
+rm -rf contestants
 # TODO /\ old code, make only exec and python files go into builds
 
 #rm -rf builds #for main.rs to handle

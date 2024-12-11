@@ -48,6 +48,6 @@ fn main() {
         return;
     } else {
         count_bots();
-        clean_builds();
+        //clean_builds();
     }
 }
