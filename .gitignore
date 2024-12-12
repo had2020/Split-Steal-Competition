@@ -16,3 +16,4 @@ target/
 /game-hoster/target
 /builds
 /debug
+/rust_artifacts

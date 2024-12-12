@@ -1,3 +1,9 @@
+mkdir rust_artifacts
+cd rust_artifacts
+artifacts=$(pwd)
+
+cd ..
+
 mkdir builds
 cd base-ai
 base=$(pwd)
@@ -7,18 +13,23 @@ projects=($(ls))
 for ai in "${projects[@]}"; do 
   cd $ai
   project_files=($(ls))
+  echo $project_files
   for file in "${project_files[@]}"; do
     #echo "${file}"
     if [[ "${file}" == "Cargo.toml" ]]; then  
-        CARGO_TARGET_DIR="${pwd}" cargo build --bin my_project
-        cargo build --bin my_project
+        export CARGO_TARGET_DIR=$artifacts
+        cargo build --release
         echo "rust"
         #cp -r "$file_to_copy" $base
     elif [[ "${file}"  == *.py ]]; then
-        cp -r "${file}" $base
+        #cp -r "${file}" $base
+        echo "python"
     elif [[ "${file}"  == *.cpp ]]; then
-        g++ -o ${file} ${file}.cpp 
-        cp -r "${file}" $base
+        #g++ -o ${file} ${file}.cpp 
+        echo "Cplusplus"
+        #cp -r "${file}" $base
     fi
   done
+
+  cd $base
 done
