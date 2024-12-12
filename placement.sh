@@ -20,6 +20,7 @@ for ai in "${projects[@]}"; do
         export CARGO_TARGET_DIR=$artifacts
         cargo build --release
         echo "rust"
+        cd 
         #cp -r "$file_to_copy" $base
     elif [[ "${file}"  == *.py ]]; then
         #cp -r "${file}" $base
