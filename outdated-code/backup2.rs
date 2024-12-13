@@ -22,19 +22,48 @@ fn calculate_max_rounds(players:usize) -> usize{
     number_of_pairs
 }
 
-fn game(player1:&String, player2:&String) {
-    println!("player1: {player1} , player2: {player2}"); //TODO game running 
+fn game1(player1:&String, player2:&String) {
+    println!("player1: {player1} , player2: {player2}");
 }
 
 fn matching(player_list: Vec<String>) {
-    let players = player_list;
+    let mut players = player_list;
+    //let mut games_passed: i128 = 0; // for looping all players
     let player_count = players.len();
+    let max_game_count = calculate_max_rounds(player_count);// * 2; // times two fixes formula?
+    let mut adjustment:usize = 0;
 
-    for i in 0..player_count {
-        for j in (i + 1)..player_count {
-            game(&players[i], &players[j]);
+    for game in 0..max_game_count {
+        if game + 1 < player_count + adjustment{
+            let current_indexing: usize = game - adjustment; // as usize
+            if let Some(player1) = players.get(current_indexing) {
+                let current_indexing1: usize = current_indexing + 1;
+        
+                if let Some(player2) = players.get(current_indexing1) {
+                    //println!("Player1: {:?}, Player2: {:?}", player1, player2);
+                    game1(player1, player2);
+                } else {
+                    println!("index out of bound player2");
+                }
+            } else {
+                println!("index out of bound player1");
+            }
+        } else {
+            //println!("out of players on loop");
+            adjustment+=player_count;
+            
+            // reordering
+            for player in 0..players.len() {
+                let index = players[player].clone();
+                players.remove(player);
+                players.push(index.to_string());
+                //println!("{index}");
+            }
         }
     }
+
+    // the games are over!
+    //clean_builds();
 }
 
 fn count_bots() -> std::io::Result<()> {
