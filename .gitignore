@@ -17,3 +17,4 @@ target/
 /builds
 /debug
 /rust_artifacts
+/game-hoster/temp_data.txt
