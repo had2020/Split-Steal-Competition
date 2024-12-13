@@ -21,6 +21,5 @@ def game_loop():
     enemy_move = understand_response()
     turn(enemy_move)
 
-if __name__ == "__main__":
-    first_hand()
-    game_loop()
+first_hand()
+game_loop()
