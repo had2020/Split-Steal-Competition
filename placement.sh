@@ -42,3 +42,9 @@ for ai in "${projects[@]}"; do
 
   cd $base
 done
+
+rm -rf rust_artifacts # only works with sudo
+
+cd ..
+cd game-hoster
+cargo run fin
