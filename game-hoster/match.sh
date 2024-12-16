@@ -4,7 +4,7 @@
 #echo "Second argument (rounds): $2"
 
 # split rounds argument into array
-IFS=',' read -r -a rounds <<< "$2"
+#IFS=',' read -r -a rounds <<< "$2"
 
 # run each round
 #for round in "${rounds[@]}"; do
@@ -13,6 +13,8 @@ IFS=',' read -r -a rounds <<< "$2"
     #./$1 <<<$round >>temp_data.txt
     #echo "Result for round $round stored in temp_data.txt"
 #done
+
+
 
 sh first_runner.sh $1 &
 sh second_runner.sh $2 &
