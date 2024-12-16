@@ -25,17 +25,17 @@ Should="True"
 Changed="False"
 while [ $Should = "True" ]; do
   CHANGE="$(tail -n 1 "change_tracker")"
-  LOG_FILE="second.log"
+  LOG_FILE="first.log"
   LAST_LINE=$(tail -n 1 "$LOG_FILE")
   if [$CHANGE = "true"]; then
     echo "false" > change_tracker.txt 
     tmux send-keys -t $SESSION_NAME $LAST_LINE Enter
     echo "true" > change_tracker2.txt
-    $Changed="True"
+    Changed="True"
   fi
   sleep 0.1
   if [ $Changed = "True" ]; then
-    $Changed="False"
+    Changed="False"
     if [ $2 = $counter ]; then 
       Should="False"
     else
