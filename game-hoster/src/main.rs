@@ -22,19 +22,24 @@ fn calculate_max_rounds(players:usize) -> usize{
     number_of_pairs
 }
 
-fn game(player1:&String, player2:&String) {
-    println!("player1: {player1} , player2: {player2}"); //TODO game running 
-    let command = format!("sh match.sh {} {} {}", player1, player2, 1); // 3rd argument == rounds
-    sh_command1(&command);
+fn game(player1:&String, player2:&String, gameid:usize) {
+    if gameid == 1 {
+        println!("game_id: {gameid}");
+        //println!("player1: {player1} , player2: {player2}"); //TODO game running 
+        let command = format!("sh match.sh {} {} {}", player1, player2, 1); // 3rd argument == rounds
+        sh_command1(&command);
+    }
 }
 
 fn matching(player_list: Vec<String>) {
     let players = player_list;
     let player_count = players.len();
 
+    let mut gameid:usize = 0;
     for i in 0..player_count {
         for j in (i + 1)..player_count {
-            game(&players[i], &players[j]);
+            gameid+=1;
+            game(&players[i], &players[j], gameid);
         }
     }
 }
