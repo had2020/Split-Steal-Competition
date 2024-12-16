@@ -20,17 +20,28 @@ else
 fi
 
 # 👇 action loop
+counter=0
 Should="True"
+Changed="False"
 while [ $Should = "True" ]; do
-  echo "counting"
   CHANGE="$(tail -n 1 "change_tracker")"
   LOG_FILE="second.log"
   LAST_LINE=$(tail -n 1 "$LOG_FILE")
   if [$CHANGE = "true"]; then
     echo "false" > change_tracker.txt 
     tmux send-keys -t $SESSION_NAME $LAST_LINE Enter
+    echo "true" > change_tracker2.txt
+    $Changed="True"
   fi
   sleep 0.1
+  if [ $Changed = "True" ]; then
+    $Changed="False"
+    if [ $2 = $counter ]; then 
+      Should="False"
+    else
+      counter=$((counter + 1))
+    fi
+  fi
 done
 
 # D
@@ -41,5 +52,7 @@ sleep 0.1
 # when done wit match
 tmux kill-session -t $SESSION_NAME 2>/dev/null
 
-echo second.log > "a"
+echo "" > second.log
+echo "false" > change_tracker2.txt
+#echo second.log > "a"
 echo "fin"

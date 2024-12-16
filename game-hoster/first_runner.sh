@@ -20,6 +20,32 @@ else
 fi
 
 # 👇 action loop
+counter=0
+Should="True"
+Changed="False"
+while [ $Should = "True" ]; do
+  CHANGE="$(tail -n 1 "change_tracker")"
+  LOG_FILE="second.log"
+  LAST_LINE=$(tail -n 1 "$LOG_FILE")
+  if [$CHANGE = "true"]; then
+    echo "false" > change_tracker.txt 
+    tmux send-keys -t $SESSION_NAME $LAST_LINE Enter
+    echo "true" > change_tracker2.txt
+    $Changed="True"
+  fi
+  sleep 0.1
+  if [ $Changed = "True" ]; then
+    $Changed="False"
+    if [ $2 = $counter ]; then 
+      Should="False"
+    else
+      counter=$((counter + 1))
+    fi
+  fi
+done
+
+
+# REMOVE \/
 echo "true" > change_tracker.txt 
 
 # round loop
@@ -31,6 +57,7 @@ LOG_FILE="second.log"
 LAST_LINE=$(tail -n 1 "$LOG_FILE")
 echo "Last log line:"
 echo "$LAST_LINE"
+# REMOVE /\
 
 # D
 tmux detach -s $SESSION_NAME 2>/dev/null
