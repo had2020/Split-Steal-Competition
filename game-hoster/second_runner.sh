@@ -26,10 +26,10 @@ while [ $Should = "True" ]; do
   CHANGE="$(tail -n 1 "change_tracker")"
   LOG_FILE="second.log"
   LAST_LINE=$(tail -n 1 "$LOG_FILE")
-  if ($CHANGE = "true") {
+  if [$CHANGE = "true"]; then
     echo "false" > change_tracker.txt 
     tmux send-keys -t $SESSION_NAME $LAST_LINE Enter
-  }
+  fi
   sleep 0.1
 done
 

@@ -26,7 +26,7 @@ fn game(player1:&String, player2:&String, gameid:usize) {
     if gameid == 1 {
         println!("game_id: {gameid}");
         //println!("player1: {player1} , player2: {player2}"); //TODO game running 
-        let command = format!("sh match.sh {} {} {}", player1, player2, 1); // 3rd argument == rounds
+        let command = format!("sh match.sh {} {} {}", player1, player2, 5); // 3rd argument == rounds
         sh_command1(&command); // TODO just replace with prement sh commands through rust
     }
 }
