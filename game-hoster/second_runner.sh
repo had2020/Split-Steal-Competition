@@ -22,7 +22,7 @@ fi
 # 👇 action loop
 counter=0
 Should="True"
-Changed="False"
+Changed="True"
 while [ $Should = "True" ]; do
   CHANGE="$(tail -n 1 "change_tracker")"
   LOG_FILE="first.log"
@@ -32,16 +32,20 @@ while [ $Should = "True" ]; do
     tmux send-keys -t $SESSION_NAME $LAST_LINE Enter
     echo "true" > change_tracker2.txt
     Changed="True"
+    echo "change"
   fi
   sleep 0.1
   if [ $Changed = "True" ]; then
-    Changed="False"
-    if [ $2 = $counter ]; then 
-      Should="False"
+    $Changed="False"
+    if [ "$2" = "$counter" ]; then 
+      $Should="False"
+    $Should="False" # Debug
     else
-      counter=$((counter + 1))
+      change=$((counter + 1))
+      $counter=$change
     fi
   fi
+  $Should="False" # Debug
 done
 
 # D

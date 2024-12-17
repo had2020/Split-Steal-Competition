@@ -22,7 +22,7 @@ fi
 # 👇 action loop
 counter=0
 Should="True"
-Changed="False"
+Changed="True"
 while [ $Should = "True" ]; do
   CHANGE="$(tail -n 1 "change_tracker")"
   LOG_FILE="second.log"
@@ -32,31 +32,35 @@ while [ $Should = "True" ]; do
     tmux send-keys -t $SESSION_NAME $LAST_LINE Enter
     echo "true" > change_tracker.txt
     Changed="True"
+    echo "change"
   fi
   sleep 0.1
   if [ $Changed = "True" ]; then
-    Changed="False"
-    if [ $2 = $counter ]; then 
-      Should="False"
+    $Changed="False"
+    if [ "$2" = "$counter" ]; then 
+      $Should="False"
+    $Should="False" # Debug
     else
-      counter=$((counter + 1))
+      change=$((counter + 1))
+      $counter=$change
     fi
   fi
+  $Should="False" # Debug
 done
 
 
 # REMOVE \/
-echo "true" > change_tracker.txt 
+#echo "true" > change_tracker.txt 
 
 # round loop
-tmux send-keys -t $SESSION_NAME "0" Enter
-tmux send-keys -t $SESSION_NAME "0" Enter
-tmux send-keys -t $SESSION_NAME "0" Enter
+#tmux send-keys -t $SESSION_NAME "0" Enter
+#tmux send-keys -t $SESSION_NAME "0" Enter
+#tmux send-keys -t $SESSION_NAME "0" Enter
 
-LOG_FILE="second.log"
-LAST_LINE=$(tail -n 1 "$LOG_FILE")
-echo "Last log line:"
-echo "$LAST_LINE"
+#LOG_FILE="second.log"
+#LAST_LINE=$(tail -n 1 "$LOG_FILE")
+#echo "Last log line:"
+#echo "$LAST_LINE"
 # REMOVE /\
 
 # D

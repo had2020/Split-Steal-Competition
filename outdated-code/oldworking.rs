@@ -3,13 +3,8 @@ use std::fs::remove_dir;
 use std::fs::DirEntry;
 use std::process::Command; // terimal commands
 use std::env;
-use std::thread;
 
 use std::fs; // filesystem
-
-fn create_presistent_sh(start_arg:&str) {
-    thread::spawn()
-}
 
 // required kernal of type unix | windows is not supported, change commands to fix.
 fn sh_command1(command:&str) {
