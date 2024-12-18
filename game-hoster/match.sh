@@ -16,5 +16,5 @@
 
 
 
-sh first_runner.sh $1 $3 &
-sh second_runner.sh $2 $3 &
+sudo sh first_runner.sh $1 $3 &
+sudo sh second_runner.sh $2 $3 &

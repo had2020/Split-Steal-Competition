@@ -1,14 +1,41 @@
 use std::fs::read_dir;
 use std::fs::remove_dir;
 use std::fs::DirEntry;
-use std::process::Command; // terimal commands
+use std::process::{Command, Stdio};
+use std::io::{Write, BufRead, BufReader};
 use std::env;
-use std::thread;
 
 use std::fs; // filesystem
 
-fn create_presistent_sh(start_arg:&str) {
-    thread::spawn()
+fn gamething() -> std::io::Result<()> { // TODO Replace bash code ("x"_runner) with rust!
+    // Start a new shell session
+    let mut child = Command::new("sh")
+        .stdin(Stdio::piped())  // Allow input to the shell
+        .stdout(Stdio::piped()) // Capture output from the shell
+        .stderr(Stdio::piped()) // Capture errors from the shell
+        .spawn()
+        .expect("Failed to spawn shell");
+
+    let mut stdin = child.stdin.take().expect("Failed to open stdin");
+    let stdout = child.stdout.take().expect("Failed to open stdout");
+
+    // Write commands to the shell
+    writeln!(stdin, "echo Hello, World!")?;
+    writeln!(stdin, "ls")?;
+    writeln!(stdin, "pwd")?;
+    writeln!(stdin, "exit")?; // Exit the shell when done
+
+    // Read and print the output
+    let reader = BufReader::new(stdout);
+    for line in reader.lines() {
+        println!("{}", line?);
+    }
+
+    // Wait for the shell to exit
+    let status = child.wait()?;
+    println!("Shell exited with status: {}", status);
+
+    Ok(())
 }
 
 // required kernal of type unix | windows is not supported, change commands to fix.
@@ -28,11 +55,12 @@ fn calculate_max_rounds(players:usize) -> usize{
 }
 
 fn game(player1:&String, player2:&String, gameid:usize) {
-    if gameid == 1 {
+    if gameid == 1 { // only for debug
         println!("game_id: {gameid}");
         //println!("player1: {player1} , player2: {player2}"); //TODO game running 
-        let command = format!("sh match.sh {} {} {}", player1, player2, 2); // 3rd argument == rounds
-        sh_command1(&command); // TODO just replace with prement sh commands through rust
+        //let command = format!("sh match.sh {} {} {}", player1, player2, 2); // 3rd argument == rounds
+        //sh_command1(&command);
+        gamething();
     }
 }
 
@@ -87,7 +115,7 @@ fn main() {
     if args.len() < 2 { // no parameter
         //sh_command1("sh gather.sh");
         //println!("start by running gather.sh with root access");
-        println!("no parameter");
+        //println!("no parameter");
         sh_command1("sh no_par.sh");
         return;
     } else {

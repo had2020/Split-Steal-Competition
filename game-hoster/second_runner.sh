@@ -20,32 +20,55 @@ else
 fi
 
 # 👇 action loop
+max_attempts=10
+attempts=10
 counter=0
 Should="True"
 Changed="True"
+
 while [ $Should = "True" ]; do
-  CHANGE="$(tail -n 1 "change_tracker")"
-  LOG_FILE="first.log"
-  LAST_LINE=$(tail -n 1 "$LOG_FILE")
-  if [$CHANGE = "true"]; then
-    echo "false" > change_tracker.txt 
-    tmux send-keys -t $SESSION_NAME $LAST_LINE Enter
-    echo "true" > change_tracker2.txt
-    Changed="True"
-    echo "change"
-  fi
-  sleep 0.1
-  if [ $Changed = "True" ]; then
-    $Changed="False"
-    if [ "$2" = "$counter" ]; then 
-      $Should="False"
-    $Should="False" # Debug
-    else
-      change=$((counter + 1))
-      $counter=$change
+  if [ $attempts -ge $max_attempts ]; then
+    echo "p2round"
+
+    CHANGE="$(tail -n 1 "change_tracker2.txt")"
+    echo "first change: $CHANGE"
+
+    LOG_FILE="second.log"
+    LAST_LINE=$(tail -n 1 "$LOG_FILE")
+
+    if [ "$CHANGE" = "True" ]; then
+      echo "false" > change_tracker.txt 
+
+      if [ -z "$LAST_LINE" ]; then
+        echo "NULL value"
+      else
+        tmux send-keys -t $SESSION_NAME $LAST_LINE Enter
+      fi
+      echo "true" > change_tracker2.txt
+      Changed="True"
     fi
+
+    sleep 0.1
+
+    if [ "$Changed" = "True" ]; then
+      Changed="False"
+      echo "rounds: $2"
+      echo "$counter"
+      if [ "$2" = "$counter" ]; then
+        Should="False"
+      else
+        change=$((counter + 1))
+        counter=$change
+        echo "$counter"
+      fi
+    fi
+
+    attempts=$((attempts + 1))
+    echo "$attempts"
+  else
+    Should="False"
   fi
-  $Should="False" # Debug
+  #Should="False" #Debuging with only singler round
 done
 
 # D
@@ -59,4 +82,3 @@ tmux kill-session -t $SESSION_NAME 2>/dev/null
 echo "" > second.log
 echo "false" > change_tracker2.txt
 #echo second.log > "a"
-echo "fin"
