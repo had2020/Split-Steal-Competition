@@ -24,6 +24,7 @@ fn gamething() -> std::io::Result<()> { // TODO Replace bash code ("x"_runner) w
     writeln!(stdin, "ls")?;
     writeln!(stdin, "pwd")?;
     writeln!(stdin, "exit")?; // Exit the shell when done
+    // TODO Finish command sqeuence for both rounds and create a thread
 
     // Read and print the output
     let reader = BufReader::new(stdout);
