@@ -40,12 +40,20 @@ fn gamething() -> std::io::Result<()> { // TODO Replace bash code ("x"_runner) w
     Ok(())
 }
 
-fn start_master() {
+fn start_thread() -> std::io::Result<()> {
     println!("not in thread");
     let mut counter = 0;
     let handle = thread::spawn(move || {
         for i in 0..10 {
             println!("Thread: {}", i);
+            use std::fs::File;
+
+            // writing - 
+            let mut file = File::create("test.txt")?;
+            file.write_all(b"Hello, world!")?;
+            Ok(())
+            //
+
             counter += 1;
         }
     });
@@ -53,6 +61,11 @@ fn start_master() {
     handle.join().unwrap();
 
     println!("Main thread: Counter = {}", counter);
+}
+
+fn start_master() {
+    start_thread();
+    start_thread();
 }
 
 // required kernal of type unix | windows is not supported, change commands to fix.
