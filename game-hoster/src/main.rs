@@ -7,8 +7,9 @@ use std::env;
 
 use std::thread;
 use std::fs; // filesystem
+use std::fs::File;
 
-fn gamething() -> std::io::Result<()> { // TODO Replace bash code ("x"_runner) with rust!
+fn gamething(directory: ) -> std::io::Result<()> { // TODO Replace bash code ("x"_runner) with rust!
     // Start a new shell session
     let mut child = Command::new("sh")
         .stdin(Stdio::piped())  // Allow input to the shell
@@ -40,19 +41,25 @@ fn gamething() -> std::io::Result<()> { // TODO Replace bash code ("x"_runner) w
     Ok(())
 }
 
+/* 
+fn write_thing() -> std::io::Result<()> {
+    //let mut file = File::create("foo.txt")?;
+    let mut file = File::open("")?;
+    file.write_all(b"Hello, world!")?;
+    Ok(())
+}
+*/
+
 fn start_thread() -> std::io::Result<()> {
     println!("not in thread");
     let mut counter = 0;
     let handle = thread::spawn(move || {
         for i in 0..10 {
             println!("Thread: {}", i);
-            use std::fs::File;
+            
+            // each contestant should run at this indent
 
-            // writing - 
-            let mut file = File::create("test.txt")?;
-            file.write_all(b"Hello, world!")?;
-            Ok(())
-            //
+            gamething()
 
             counter += 1;
         }
@@ -61,11 +68,12 @@ fn start_thread() -> std::io::Result<()> {
     handle.join().unwrap();
 
     println!("Main thread: Counter = {}", counter);
+    Ok(())
 }
 
 fn start_master() {
     start_thread();
-    start_thread();
+    //start_thread();
 }
 
 // required kernal of type unix | windows is not supported, change commands to fix.
