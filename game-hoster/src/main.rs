@@ -5,6 +5,7 @@ use std::process::{Command, Stdio};
 use std::io::{Write, BufRead, BufReader};
 use std::env;
 
+use std::thread;
 use std::fs; // filesystem
 
 fn gamething() -> std::io::Result<()> { // TODO Replace bash code ("x"_runner) with rust!
@@ -37,6 +38,21 @@ fn gamething() -> std::io::Result<()> { // TODO Replace bash code ("x"_runner) w
     println!("Shell exited with status: {}", status);
 
     Ok(())
+}
+
+fn start_master() {
+    println!("not in thread");
+    let mut counter = 0;
+    let handle = thread::spawn(move || {
+        for i in 0..10 {
+            println!("Thread: {}", i);
+            counter += 1;
+        }
+    });
+    
+    handle.join().unwrap();
+
+    println!("Main thread: Counter = {}", counter);
 }
 
 // required kernal of type unix | windows is not supported, change commands to fix.
@@ -120,7 +136,9 @@ fn main() {
         sh_command1("sh no_par.sh");
         return;
     } else {
-        count_bots();
+        //count_bots(); # TODO reenable after threads implementation
+        start_master();
+
         //clean_builds(); TODO in other section!
     }
 }
