@@ -18,3 +18,4 @@ target/
 /debug
 /rust_artifacts
 /game-hoster/temp_data.txt
+/game-hoster/target
