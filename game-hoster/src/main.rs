@@ -12,29 +12,29 @@ use std::fs::File;
 fn gamething(directory: ) -> std::io::Result<()> { // TODO Replace bash code ("x"_runner) with rust!
     // Start a new shell session
     let mut child = Command::new("sh")
-        .stdin(Stdio::piped())  // Allow input to the shell
-        .stdout(Stdio::piped()) // Capture output from the shell
-        .stderr(Stdio::piped()) // Capture errors from the shell
+        .stdin(Stdio::piped())  // allow input to the shell
+        .stdout(Stdio::piped()) // capture output from the shell
+        .stderr(Stdio::piped()) // capture errors from the shell
         .spawn()
         .expect("Failed to spawn shell");
 
     let mut stdin = child.stdin.take().expect("Failed to open stdin");
     let stdout = child.stdout.take().expect("Failed to open stdout");
 
-    // Write commands to the shell
+    // write commands to the shell
     writeln!(stdin, "echo Hello, World!")?;
     writeln!(stdin, "ls")?;
     writeln!(stdin, "pwd")?;
     writeln!(stdin, "exit")?; // Exit the shell when done
     // TODO Finish command sqeuence for both rounds and create a thread
 
-    // Read and print the output
+    // read and print the output
     let reader = BufReader::new(stdout);
     for line in reader.lines() {
         println!("{}", line?);
     }
 
-    // Wait for the shell to exit
+    // wait for the shell to exit
     let status = child.wait()?;
     println!("Shell exited with status: {}", status);
 
